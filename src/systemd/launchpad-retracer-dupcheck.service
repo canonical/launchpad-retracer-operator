@@ -6,7 +6,7 @@ After=network.target
 Type=oneshot
 # Let's use the non privileged user available by default
 User=ubuntu
-ExecStart=/usr/bin/crash-digger -v -l /srv/retracers/lock.dupcheck -d /srv/retracers/apport_duplicates.db --auth /app/launchpad-credentials -D
+ExecStart=/usr/bin/crash-digger -v -d /srv/retracers/apport_duplicates.db --auth /app/launchpad-credentials -D
 TimeoutStartSec=1h
 Environment="APPORT_CRASHDB_CONF=/app/config-apport/crashdb.conf" 
 Environment="PYTHONPATH=/app/apport"
