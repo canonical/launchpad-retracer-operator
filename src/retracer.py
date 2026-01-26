@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 # Packages installed as part of the update process.
 PACKAGES = [
     "apport-retrace",
+    "gdb-multiarch",
     "git",
     "nginx-light",
     "python3-apt",
