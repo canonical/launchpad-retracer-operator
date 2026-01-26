@@ -30,6 +30,7 @@ RETRACER_CONFIG_LOCATION = Path("/app/config-apport")
 RETRACER_CONFIG_URL = "https://git.launchpad.net/~ubuntu-archive/+git/lp-retracer-config"
 
 SRVDIR = Path("/srv/retracers")
+LP_CREDENTIALS = Path("/app/launchpad-credentials")
 
 NGINX_SITE_CONFIG_PATH = Path("/etc/nginx/conf.d/crashdb.conf")
 
@@ -79,16 +80,18 @@ class Retracer:
 
     def import_lpcredentials(self, lpcredentials: str):
         """Import the launchpad credentials."""
-        lpcredentialsfile = "/app/launchpad-credentials"
-
         try:
-            fd = os.open(lpcredentialsfile, os.O_CREAT | os.O_WRONLY | os.O_TRUNC, 0o600)
+            fd = os.open(LP_CREDENTIALS, os.O_CREAT | os.O_WRONLY | os.O_TRUNC, 0o600)
             os.write(fd, lpcredentials.encode("utf-8"))
             os.close(fd)
-            shutil.chown(lpcredentialsfile, "ubuntu", "ubuntu")
+            shutil.chown(LP_CREDENTIALS, "ubuntu", "ubuntu")
         except OSError as e:
             logger.debug("Error creating launchpad credentials: %s", e)
             raise
+
+    def has_credentials(self) -> bool:
+        """Check if the launchpad credentials file exists."""
+        return LP_CREDENTIALS.exists()
 
     def _install_packages(self):
         """Install the Debian packages needed."""

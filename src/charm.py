@@ -70,6 +70,10 @@ class LaunchpadRetracerCharm(ops.CharmBase):
             apportversion = self._retracer.get_workload_version()
             self.unit.set_workload_version(apportversion)
 
+            if not self._retracer.has_credentials():
+                self.unit.status = ops.BlockedStatus("Launchpad credentials not available.")
+                return
+
             architectures = self._get_architectures()
             self._retracer.start(architectures)
             self.unit.status = ops.ActiveStatus()

@@ -1,6 +1,7 @@
 [Unit]
 Description=Launchpad Retracer Dupcheck Service
 After=network.target
+ConditionPathExists=/app/launchpad-credentials
 
 [Service]
 Type=oneshot
