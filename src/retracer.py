@@ -19,14 +19,12 @@ logger = logging.getLogger(__name__)
 
 # Packages installed as part of the update process.
 PACKAGES = [
+    "apport-retrace",
     "git",
     "nginx-light",
     "python3-apt",
     "python3-requests",
 ]
-
-APPORT_LOCATION = Path("/app/apport")
-APPORT_URL = "https://github.com/canonical/apport"
 
 RETRACER_CONFIG_LOCATION = Path("/app/config-apport")
 RETRACER_CONFIG_URL = "https://git.launchpad.net/~ubuntu-archive/+git/lp-retracer-config"
@@ -57,7 +55,6 @@ class Retracer:
     def install(self, architectures: list[str]):
         """Install the retracer environment."""
         self._install_packages()
-        self._clone_repository(APPORT_URL, APPORT_LOCATION)
         self._clone_repository(RETRACER_CONFIG_URL, RETRACER_CONFIG_LOCATION)
         self._install_scripts()
         self._create_directories(architectures)
@@ -72,7 +69,6 @@ class Retracer:
 
     def start(self, architectures: list[str]):
         """Enable the launchpad retracer service."""
-        self._update_checkout(APPORT_LOCATION)
         self._update_checkout(RETRACER_CONFIG_LOCATION)
         try:
             systemd.service_restart("nginx")
@@ -269,15 +265,7 @@ class Retracer:
         """Get the workload version."""
         try:
             result = run(
-                [
-                    "git",
-                    "-C",
-                    APPORT_LOCATION,
-                    "describe",
-                    "--tags",
-                    "--always",
-                    "--dirty",
-                ],
+                ["dpkg-query", "-W", "-f=${Version}", "apport-retrace"],
                 check=True,
                 stdout=PIPE,
                 stderr=STDOUT,
@@ -285,10 +273,10 @@ class Retracer:
                 env=self.env,
             )
             workload_version = result.stdout.strip()
-            logger.debug("Current vcs revision: %s", workload_version)
+            logger.debug("Current 'apport-retrace' version: %s", workload_version)
             return workload_version
         except CalledProcessError as e:
-            logger.warning("Git describe failed: %s", e.stdout)
+            logger.warning("Failed to get 'apport-retrace' version: %s", e.stdout)
             return "unknown"
 
     def _download_crashdb(self):

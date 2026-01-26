@@ -3,7 +3,7 @@
 
 ARCH=$1
 
-COMMAND=("/app/apport/bin/crash-digger" "-v" "-c" "/app/config-apport" "-C" "/home/ubuntu/cache-${ARCH}" "--crash-db=ubuntu-${ARCH}" "-l" "/home/ubuntu/lock.${ARCH}" "-d" "/srv/retracers/apport_duplicates.db" "--gdb-sandbox" "--auth" "/app/launchpad-credentials")
+COMMAND=("/usr/bin/crash-digger" "-v" "-c" "/app/config-apport" "-C" "/home/ubuntu/cache-${ARCH}" "--crash-db=ubuntu-${ARCH}" "-l" "/home/ubuntu/lock.${ARCH}" "-d" "/srv/retracers/apport_duplicates.db" "--gdb-sandbox" "--auth" "/app/launchpad-credentials")
 
 # Only publish the database on amd64
 if [ "$ARCH" == "amd64" ]; then
