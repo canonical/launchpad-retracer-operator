@@ -9,6 +9,7 @@ import shutil
 from subprocess import CalledProcessError
 
 import ops
+import requests
 from charmlibs.apt import PackageError, PackageNotFoundError
 from charms.traefik_k8s.v2.ingress import IngressPerAppRequirer as IngressRequirer
 from ops.model import Secret
@@ -35,8 +36,8 @@ class LaunchpadRetracerCharm(ops.CharmBase):
         self.framework.observe(self.on.upgrade_charm, self._on_install)
         self.framework.observe(self.on.config_changed, self._on_config_changed)
 
-        # Ingress URL changes require updating the configuration and also regenerating sitemaps,
-        # therefore we can bind events for this relation to the config_changed event.
+        # Ingress URL changes require reapplying the charm configuration,
+        # so we bind events for this relation to the config_changed handler.
         self.framework.observe(self.ingress.on.ready, self._on_config_changed)
         self.framework.observe(self.ingress.on.revoked, self._on_config_changed)
 
@@ -53,6 +54,7 @@ class LaunchpadRetracerCharm(ops.CharmBase):
             PackageError,
             PackageNotFoundError,
             OSError,
+            requests.RequestException,
             shutil.Error,
             ValueError,
         ):
@@ -66,7 +68,7 @@ class LaunchpadRetracerCharm(ops.CharmBase):
         """Start the retracer service."""
         self.unit.status = ops.MaintenanceStatus("Starting retracer service")
         try:
-            # Get the apport commit id as workload version
+            # Get the apport-retrace Debian package version as workload version
             apportversion = self._retracer.get_workload_version()
             self.unit.set_workload_version(apportversion)
 

@@ -82,8 +82,8 @@ class Retracer:
         """Import the launchpad credentials."""
         try:
             fd = os.open(LP_CREDENTIALS, os.O_CREAT | os.O_WRONLY | os.O_TRUNC, 0o600)
-            os.write(fd, lpcredentials.encode("utf-8"))
-            os.close(fd)
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                f.write(lpcredentials)
             shutil.chown(LP_CREDENTIALS, "ubuntu", "ubuntu")
         except OSError as e:
             logger.debug("Error creating launchpad credentials: %s", e)
@@ -133,7 +133,6 @@ class Retracer:
             service_txt + systemd_proxy
         )
         (systemd_unit_location / "launchpad-retracer-dupcheck.timer").write_text(timer_txt)
-        systemd.service_enable("--now", "launchpad-retracer-dupcheck.timer")
 
         # Worker units
         worker_service_txt = Path("src/systemd/launchpad-retracer-worker@.service").read_text()
@@ -144,6 +143,9 @@ class Retracer:
         )
         (systemd_unit_location / "launchpad-retracer-worker@.timer").write_text(worker_timer_txt)
         systemd.daemon_reload()
+
+        # Enable units
+        systemd.service_enable("--now", "launchpad-retracer-dupcheck.timer")
 
         # Handle architecture changes
         active_timers = glob.glob(

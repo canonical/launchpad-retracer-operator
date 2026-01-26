@@ -11,6 +11,7 @@ from subprocess import CalledProcessError
 from unittest.mock import patch
 
 import pytest
+import requests
 from charmlibs.apt import PackageError, PackageNotFoundError
 from ops.testing import (
     ActiveStatus,
@@ -60,6 +61,7 @@ def test_on_install_no_architectures(ctx, base_state):
         PackageNotFoundError,
         CalledProcessError(1, "foo"),
         OSError,
+        requests.RequestException,
         ValueError("Config 'architectures' cannot be empty."),
     ],
 )
