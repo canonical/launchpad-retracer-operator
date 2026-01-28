@@ -18,7 +18,7 @@ from retracer import Retracer
 
 logger = logging.getLogger(__name__)
 
-INGRESS_PORT = 80
+PORT = 80
 
 
 class LaunchpadRetracerCharm(ops.CharmBase):
@@ -27,9 +27,7 @@ class LaunchpadRetracerCharm(ops.CharmBase):
     def __init__(self, framework: ops.Framework):
         super().__init__(framework)
 
-        self.ingress = IngressRequirer(
-            self, port=INGRESS_PORT, strip_prefix=True, relation_name="ingress"
-        )
+        self.ingress = IngressRequirer(self, port=PORT, strip_prefix=True, relation_name="ingress")
 
         self.framework.observe(self.on.install, self._on_install)
         self.framework.observe(self.on.start, self._on_start)
@@ -131,6 +129,8 @@ class LaunchpadRetracerCharm(ops.CharmBase):
             )
             return
 
+        self.unit.set_ports(PORT)
+        logger.debug("Opened port %s", PORT)
         self.unit.status = ops.ActiveStatus()
 
     def _get_architectures(self) -> list[str]:
