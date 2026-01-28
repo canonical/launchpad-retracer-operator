@@ -1,0 +1,12 @@
+[Unit]
+Description=Launchpad Retracer Worker Service for %i
+After=network.target
+ConditionPathExists=/app/launchpad-credentials
+
+[Service]
+Type=oneshot
+User=ubuntu
+ExecStart=/app/retracer-worker-wrapper %i
+TimeoutStartSec=3h
+Environment="APPORT_CRASHDB_CONF=/app/config-apport/crashdb.conf"
+Environment="PYTHONPATH=/app/apport"

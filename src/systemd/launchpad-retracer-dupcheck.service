@@ -1,0 +1,13 @@
+[Unit]
+Description=Launchpad Retracer Dupcheck Service
+After=network.target
+ConditionPathExists=/app/launchpad-credentials
+
+[Service]
+Type=oneshot
+# Let's use the non privileged user available by default
+User=ubuntu
+ExecStart=/usr/bin/crash-digger -v -d /srv/retracers/apport_duplicates.db --auth /app/launchpad-credentials -D
+TimeoutStartSec=1h
+Environment="APPORT_CRASHDB_CONF=/app/config-apport/crashdb.conf" 
+Environment="PYTHONPATH=/app/apport"
