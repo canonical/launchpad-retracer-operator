@@ -1,0 +1,9 @@
+[Unit]
+Description=Launchpad Retracer Dupcheck Timer
+
+[Timer]
+OnCalendar=*:0/10
+Persistent=true
+
+[Install]
+WantedBy=timers.target

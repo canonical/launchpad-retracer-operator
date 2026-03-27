@@ -1,0 +1,14 @@
+#!/bin/bash
+# Wrapper for crash-digger to handle architecture-specific flags.
+
+ARCH=$1
+
+COMMAND=("/usr/bin/crash-digger" "-v" "-c" "/app/config-apport" "-C" "/home/ubuntu/cache-${ARCH}" "--crash-db=ubuntu-${ARCH}" "-d" "/srv/retracers/apport_duplicates.db" "--gdb-sandbox" "--auth" "/app/launchpad-credentials")
+
+# Only publish the database on amd64
+if [ "$ARCH" == "amd64" ]; then
+    COMMAND+=("--publish-db" "/srv/retracers/apport-duplicates")
+fi
+
+# Execute the command
+exec "${COMMAND[@]}"

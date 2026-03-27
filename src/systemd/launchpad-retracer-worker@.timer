@@ -1,0 +1,10 @@
+[Unit]
+Description=Launchpad Retracer Worker Timer for %i
+
+[Timer]
+OnCalendar=*:0/30
+RandomizedDelaySec=300
+Persistent=true
+
+[Install]
+WantedBy=timers.target
