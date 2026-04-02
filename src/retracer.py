@@ -25,6 +25,7 @@ PACKAGES = [
     "nginx-light",
     "python3-apt",
     "python3-requests",
+    "ubuntu-dbgsym-keyring",
 ]
 
 RETRACER_CONFIG_LOCATION = Path("/app/config-apport")
