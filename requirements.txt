@@ -16,15 +16,15 @@ opentelemetry-api==1.40.0
     # via
     #   charmlibs-apt
     #   ops
-ops==3.6.0
+ops==3.7.0
     # via launchpad-retracer-operator (pyproject.toml)
 pydantic==2.12.5
     # via launchpad-retracer-operator (pyproject.toml)
-pydantic-core==2.43.0
+pydantic-core==2.45.0
     # via pydantic
 pyyaml==6.0.3
     # via ops
-requests==2.33.0
+requests==2.33.1
     # via launchpad-retracer-operator (pyproject.toml)
 typing-extensions==4.15.0
     # via

@@ -20,11 +20,11 @@ opentelemetry-api==1.40.0
     # via
     #   charmlibs-apt
     #   ops
-ops==3.6.0
+ops==3.7.0
     # via
     #   launchpad-retracer-operator (pyproject.toml)
     #   ops-scenario
-ops-scenario==8.6.0
+ops-scenario==8.7.0
     # via ops
 packaging==26.0
     # via pytest
@@ -32,7 +32,7 @@ pluggy==1.6.0
     # via pytest
 pydantic==2.12.5
     # via launchpad-retracer-operator (pyproject.toml)
-pydantic-core==2.43.0
+pydantic-core==2.45.0
     # via pydantic
 pygments==2.20.0
     # via pytest
@@ -42,7 +42,7 @@ pyyaml==6.0.3
     # via
     #   ops
     #   ops-scenario
-requests==2.33.0
+requests==2.33.1
     # via launchpad-retracer-operator (pyproject.toml)
 ruff==0.15.8
     # via launchpad-retracer-operator (pyproject.toml)
