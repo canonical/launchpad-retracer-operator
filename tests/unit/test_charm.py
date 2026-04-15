@@ -147,7 +147,7 @@ def test_on_config_changed_secret_not_granted(ctx, base_state):
 
 
 def test_on_config_changed_secret_not_found(ctx, base_state):
-    config_secret = Secret(tracked_content={})
+    config_secret = Secret(tracked_content={"other-key": "value"})
     state = State(
         leader=True,
         secrets=[config_secret],
