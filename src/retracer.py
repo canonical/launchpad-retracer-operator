@@ -25,7 +25,7 @@ PACKAGES = [
     "nginx-light",
     "python3-apt",
     "python3-requests",
-    "python3-zstd",
+    "python3-zstandard",
     "ubuntu-dbgsym-keyring",
 ]
 
