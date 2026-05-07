@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 from subprocess import PIPE, STDOUT, CalledProcessError, run
 
-import charms.operator_libs_linux.v1.systemd as systemd
+from charmlibs import systemd
 import requests
 from charmlibs import apt
 from charmlibs.apt import PackageError, PackageNotFoundError
