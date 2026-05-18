@@ -10,9 +10,8 @@ import shutil
 from pathlib import Path
 from subprocess import PIPE, STDOUT, CalledProcessError, run
 
-from charmlibs import systemd
 import requests
-from charmlibs import apt
+from charmlibs import apt, systemd
 from charmlibs.apt import PackageError, PackageNotFoundError
 
 logger = logging.getLogger(__name__)
