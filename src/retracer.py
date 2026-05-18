@@ -289,12 +289,12 @@ class Retracer:
 
     def _download_crashdb(self):
         """Download the crashdb."""
-        db_path = SRVDIR / "apport_duplicates.db"
+        db_path = SRVDIR / "apport-duplicates" / "apport_duplicates.db"
         if db_path.exists():
             logger.debug("Crashdb %s already exists, skipping download.", db_path)
             return
         try:
-            url = "https://ubuntu-archive-team.ubuntu.com/apport-duplicates/apport_duplicates.db"
+            url = "https://launchpad-retracer.ubuntu.com/apport-duplicates/apport_duplicates.db"
             with requests.get(url, stream=True, timeout=60, proxies=self.proxies) as r:
                 r.raise_for_status()
 
