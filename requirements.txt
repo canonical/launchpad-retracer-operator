@@ -2,7 +2,7 @@
 #    uv pip compile --no-cache pyproject.toml -o requirements.txt
 annotated-types==0.7.0
     # via pydantic
-certifi==2026.5.20
+certifi==2026.6.17
     # via requests
 charmlibs-apt==1.0.0.post0
     # via launchpad-retracer-operator (pyproject.toml)
@@ -14,11 +14,11 @@ idna==3.18
     # via requests
 importlib-metadata==8.7.1
     # via opentelemetry-api
-opentelemetry-api==1.42.1
+opentelemetry-api==1.43.0
     # via
     #   charmlibs-apt
     #   ops
-ops==3.7.1
+ops==3.8.0
     # via launchpad-retracer-operator (pyproject.toml)
 pydantic==2.13.0
     # via launchpad-retracer-operator (pyproject.toml)
