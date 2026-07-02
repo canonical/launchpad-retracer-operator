@@ -6,7 +6,7 @@ certifi==2026.6.17
     # via requests
 charmlibs-apt==1.0.0.post1
     # via launchpad-retracer-operator (pyproject.toml)
-charmlibs-systemd==1.0.0
+charmlibs-systemd==1.0.0.post0
     # via launchpad-retracer-operator (pyproject.toml)
 charset-normalizer==3.4.7
     # via requests
