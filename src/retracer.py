@@ -61,9 +61,13 @@ class Retracer:
         self._clone_repository(RETRACER_CONFIG_URL, RETRACER_CONFIG_LOCATION)
         self._install_scripts()
         self._create_directories(architectures)
-        self._download_crashdb()
+        try:
+            self._download_crashdb()
+        except requests.RequestException:
+            logger.warning("Failed to seed the crashdb, continuing without a bootstrap copy")
         self._setup_systemd_units(architectures)
         self._nginx_config()
+        self._restart_nginx()
 
     def configure(self, architectures: list[str]):
         """Configure the retracer for the given architectures."""
@@ -73,12 +77,7 @@ class Retracer:
     def start(self, architectures: list[str]):
         """Enable the launchpad retracer service."""
         self._update_checkout(RETRACER_CONFIG_LOCATION)
-        try:
-            systemd.service_restart("nginx")
-            logger.debug("Nginx restarted")
-        except CalledProcessError as e:
-            logger.error("Failed to start systemd services: %s", e)
-            raise
+        self._restart_nginx()
 
     def import_lpcredentials(self, lpcredentials: str):
         """Import the launchpad credentials."""
@@ -324,3 +323,12 @@ class Retracer:
         # Remove default nginx configuration
         Path("/etc/nginx/sites-enabled/default").unlink(missing_ok=True)
         logger.debug("Nginx default configuration removed")
+
+    def _restart_nginx(self):
+        """Reload nginx after configuration changes."""
+        try:
+            systemd.service_restart("nginx")
+            logger.debug("Nginx restarted")
+        except CalledProcessError as e:
+            logger.error("Failed to restart nginx: %s", e)
+            raise
