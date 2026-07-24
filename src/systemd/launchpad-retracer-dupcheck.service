@@ -11,3 +11,6 @@ ExecStart=/usr/bin/crash-digger -v -d /srv/retracers/apport_duplicates.db --auth
 TimeoutStartSec=1h
 Environment="APPORT_CRASHDB_CONF=/app/config-apport/crashdb.conf" 
 Environment="PYTHONPATH=/app/apport"
+# /tmp is a small tmpfs; apport writes large uncompressed coredumps, so use
+# /var/tmp (on-disk) to avoid "Disk quota exceeded" errors.
+Environment="TMPDIR=/var/tmp"
