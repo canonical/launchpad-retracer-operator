@@ -14,7 +14,7 @@ coverage==7.16.0
     # via launchpad-retracer-operator (pyproject.toml)
 idna==3.19
     # via requests
-importlib-metadata==8.7.1
+importlib-metadata==9.0.1
     # via opentelemetry-api
 iniconfig==2.3.0
     # via pytest
