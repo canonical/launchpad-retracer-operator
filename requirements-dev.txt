@@ -10,23 +10,23 @@ charmlibs-systemd==1.0.0.post0
     # via launchpad-retracer-operator (pyproject.toml)
 charset-normalizer==3.5.1
     # via requests
-coverage==7.16.0
+coverage==7.16.2
     # via launchpad-retracer-operator (pyproject.toml)
-idna==3.19
+idna==3.20
     # via requests
 importlib-metadata==9.0.1
     # via opentelemetry-api
 iniconfig==2.3.0
     # via pytest
-opentelemetry-api==1.44.0
+opentelemetry-api==1.45.0
     # via
     #   charmlibs-apt
     #   ops
-ops==3.8.1
+ops==3.8.2
     # via
     #   launchpad-retracer-operator (pyproject.toml)
     #   ops-scenario
-ops-scenario==8.8.1
+ops-scenario==8.8.2
     # via ops
 packaging==26.3
     # via pytest
@@ -34,7 +34,7 @@ pluggy==1.6.0
     # via pytest
 pydantic==2.13.5
     # via launchpad-retracer-operator (pyproject.toml)
-pydantic-core==2.48.0
+pydantic-core==2.49.0
     # via pydantic
 pygments==2.21.0
     # via pytest
@@ -46,7 +46,7 @@ pyyaml==6.0.3
     #   ops-scenario
 requests==2.34.2
     # via launchpad-retracer-operator (pyproject.toml)
-ruff==0.16.5
+ruff==0.16.9
     # via launchpad-retracer-operator (pyproject.toml)
 typing-extensions==4.16.0
     # via
@@ -57,9 +57,9 @@ typing-extensions==4.16.0
     #   typing-inspection
 typing-inspection==0.4.4
     # via pydantic
-urllib3==2.7.0
+urllib3==2.8.0
     # via requests
-websocket-client==1.9.1
+websocket-client==1.9.2
     # via ops
 zipp==4.1.0
     # via importlib-metadata
