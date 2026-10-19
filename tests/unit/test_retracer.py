@@ -3,11 +3,12 @@
 
 """Unit tests for retracer service helpers."""
 
+from pathlib import Path
 from unittest.mock import patch
 
 import requests
 
-from retracer import RETRACER_CONFIG_LOCATION, RETRACER_CONFIG_URL, Retracer
+from retracer import RETRACER_CONFIG_LOCATION, RETRACER_CONFIG_URL, SRVDIR, Retracer
 
 
 @patch.object(Retracer, "_restart_nginx")
@@ -84,3 +85,16 @@ def test_start_restarts_nginx(update_checkout_mock, restart_nginx_mock):
 
     update_checkout_mock.assert_called_once_with(RETRACER_CONFIG_LOCATION)
     restart_nginx_mock.assert_called_once_with()
+
+
+def test_duplicate_db_shared_and_outside_publish_dir():
+    dupcheck = Path("src/systemd/launchpad-retracer-dupcheck.service").read_text()
+    wrapper = Path("src/scripts/worker-wrapper").read_text()
+    db_path = str(SRVDIR / "apport_duplicates.db")
+    publish_dir = str(SRVDIR / "apport-duplicates")
+
+    assert f"-d {db_path} " in dupcheck
+    assert f'"-d" "{db_path}"' in wrapper
+    # crash-digger replaces the publish directory, the db must not live in it
+    assert f'"--publish-db" "{publish_dir}"' in wrapper
+    assert not db_path.startswith(publish_dir + "/")

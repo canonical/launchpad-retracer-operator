@@ -287,7 +287,9 @@ class Retracer:
 
     def _download_crashdb(self):
         """Download the crashdb."""
-        db_path = SRVDIR / "apport-duplicates" / "apport_duplicates.db"
+        # Keep the database outside of the published directory, crash-digger
+        # replaces that whole directory on every --publish-db run.
+        db_path = SRVDIR / "apport_duplicates.db"
         if db_path.exists():
             logger.debug("Crashdb %s already exists, skipping download.", db_path)
             return
