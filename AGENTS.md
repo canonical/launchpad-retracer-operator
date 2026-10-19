@@ -30,13 +30,7 @@ To update the lock file (e.g. after changing `pyproject.toml` dependencies):
 make update-dependencies
 ```
 
-To regenerate `requirements.txt` and `requirements-dev.txt`:
-
-```
-make generate-requirements
-```
-
-Do not invoke `uv pip compile` or `uv lock` directly.
+Do not invoke `uv lock` directly.
 
 ## Workflow
 
